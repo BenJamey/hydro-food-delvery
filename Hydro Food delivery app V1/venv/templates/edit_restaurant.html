@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Restaurant - Hydro Food Delivery</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_EditRest.css') }}">
+</head>
+<body>
+    <div class="header">
+        <h1>Edit Restaurant</h1>
+        <p>Update restaurant information</p>
+    </div>
+    
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash-message {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    
+    <div class="form-container">
+        <!-- Show current image -->
+        <div class="current-image">
+            <h3>Current Image:</h3>
+            {% if restaurant.cover_image %}
+                <img src="{{ url_for('get_restaurant_image', restaurant_id=restaurant.id) }}" 
+                     alt="{{ restaurant.rest_name }}">
+            {% else %}
+                <div class="no-current-image">No Image</div>
+            {% endif %}
+        </div>
+        
+        <form method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="rest_name">Restaurant Name *</label>
+                <input type="text" id="rest_name" name="rest_name" required 
+                       value="{{ restaurant.rest_name }}">
+            </div>
+            
+            <div class="form-group">
+                <label for="rest_score">Rating (1-5) *</label>
+                <input type="number" id="rest_score" name="rest_score" 
+                       min="1" max="5" step="0.1" required 
+                       value="{{ restaurant.rest_score }}">
+            </div>
+            
+            <div class="form-group">
+                <label for="delivery_fee">Delivery Fee ($) *</label>
+                <input type="number" id="delivery_fee" name="delivery_fee" 
+                       min="0" step="0.01" required 
+                       value="{{ restaurant.delivery_fee }}">
+            </div>
+            
+            <div class="form-group">
+                <label for="details">Category *</label>
+                <select id="details" name="details" required>
+                    <option value="">Select Category</option>
+                    <option value="fast_food" {% if restaurant.details == 'fast_food' %}selected{% endif %}>Fast Food</option>
+                    <option value="fine_dining" {% if restaurant.details == 'fine_dining' %}selected{% endif %}>Fine Dining</option>
+                    <option value="casual_dining" {% if restaurant.details == 'casual_dining' %}selected{% endif %}>Casual Dining</option>
+                    <option value="sushi_bar" {% if restaurant.details == 'sushi_bar' %}selected{% endif %}>Sushi Bar</option>
+                    <option value="pizza" {% if restaurant.details == 'pizza' %}selected{% endif %}>Pizza</option>
+                    <option value="chinese" {% if restaurant.details == 'chinese' %}selected{% endif %}>Chinese</option>
+                    <option value="indian" {% if restaurant.details == 'indian' %}selected{% endif %}>Indian</option>
+                    <option value="mexican" {% if restaurant.details == 'mexican' %}selected{% endif %}>Mexican</option>
+                    <option value="italian" {% if restaurant.details == 'italian' %}selected{% endif %}>Italian</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="description">Description *</label>
+                <textarea id="description" name="description" rows="3" required>{{ restaurant.description }}</textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="cover_image">New Restaurant Image (optional)</label>
+                <input type="file" id="cover_image" name="cover_image" 
+                       accept="image/*">
+                <small>Upload a new image to replace the current one (leave empty to keep current image)</small>
+            </div>
+            
+            <div class="form-buttons">
+                <a href="{{ url_for('homepage') }}" class="btn btn-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary">Update Restaurant</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
