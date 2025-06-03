@@ -1,0 +1,249 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #ffffff;
+    margin: auto;
+
+}
+.header {
+    background-color: #E7F4FB;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    background-color: green;
+    border-bottom: 3px solid black;
+    height: 420px;
+}
+
+
+/*Used to store the restauraunts in a app like structure*/
+.app-container{
+    width: 1190px;
+    Height: 1830px;
+    background-color: #E7F4FB;
+    border: 3px solid black;
+    align-items: center;
+    margin: auto;
+}
+
+.details-top{
+    background-color: #E7F4FB;
+    height: 230px;
+    padding-left: 20px;
+    border-bottom: 3px solid black;
+    margin-bottom: 20px;
+}
+        
+.restaurant-name {      
+    font-size: 4em;          
+    font-weight: bold;      
+    color: #1d2731;    
+    text-shadow: -2px 0 #DEBD3B, 0 2px #DEBD3B, 2px 0 #DEBD3B, 0 -2px #DEBD3B;
+    margin-bottom: 10px;
+    margin-left: 20px;
+    width: 550px;  
+    height:100%;
+}
+
+.top-image{
+    width:300px;
+    height: 100px;
+    margin-left: auto;
+    margin-right: 20px;
+    margin-top: -150px;
+    display: block;
+}
+
+.description{
+    font-size: 1.5em;
+    font-weight: bold; 
+    color: #2c3e50; 
+    width: 100%;
+    margin-left:20px;
+}
+
+.review_stars{
+    font-size: 1.2em;
+    font-weight: bold; 
+    color:#e67e22;
+    text-shadow: -2px 0 #2c3e50, 0 2px #2c3e50, 2px 0 #2c3e50, 0 -2px #2c3e50;
+    margin-left: 20px;
+    background-color:#7EC2E7;
+    border: 3px solid black;
+    width: 300px;
+    height: 80px;
+    text-align: center;
+}
+
+.Restauraunt-catagory{
+    font-size: 2.5em;          
+    font-weight: bold;      
+    color: #000000;
+    margin-left: 20px;
+}
+
+.restaurant-info {
+    color: #666;
+    margin-bottom: 10px;
+    padding-left: 20px; 
+    gap: 20px;
+    
+}
+
+.food-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 10px;
+    margin-left: 20px;
+}
+
+.item-card{
+    background: #1a609e83;
+    border-radius: 20px;
+    border-width: 5px;
+    border: 3px solid #FFDA46;
+    width: 324px;
+    height: 315;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.item-image{
+    width: 100%;
+    height: 195px;
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+    border-bottom: 3px solid #FFDA46;
+}
+
+.no-image{
+    background-color: #aeafaf;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+    width: 100%;
+    height: 195px;
+    border-bottom: 3px solid #FFDA46;
+}
+
+.Item-details{
+    width: 100%;
+    height: 100px;
+    margin-left: 15px;
+    margin-top: -10px;
+}
+
+.Item-name{
+    font-size: 1.3em;          
+    font-weight: bold;
+    width: 90%;
+    height: 50%;
+}
+
+.Item-price{
+    font-size: 1em;
+    font-weight: bold; 
+    margin-top: -15px;
+    color:#236938
+}
+
+.add-img-btn{
+    color: #666;
+    font-size: 1.5em;          
+    font-weight: bold; 
+    text-decoration: none;
+}
+
+.rating {
+    color: #f3d112;
+    font-weight: bold;
+}
+        
+.delivery-fee {
+    color: #16a741;
+    font-weight: bold;
+}
+        
+.category {
+    background-color: #3498db;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.8em;
+    margin-top: 10px;
+}
+
+.no-restaurants {
+    text-align: center;
+    padding: 50px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+        
+.flash-message {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+        
+.flash-message.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+        
+.flash-message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+        
+.restaurant-actions {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+    padding-left: 18px; 
+    margin-bottom: 10px;
+}
+
+.back-btn{
+    background-color: #4b5279;
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;   
+    margin-bottom: 90px;
+    margin-left:50px;
+    width:30px;
+    height: 30px;
+}
+        
+.edit-btn {
+    background-color: #f39c12;
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+}
+        
+.edit-btn:hover {
+    background-color: #e67e22;
+}
+        
+.delete-btn {
+    background-color: #ff1900;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+}
+        
+.delete-btn:hover {
+    background-color: #c0392b;
+}
