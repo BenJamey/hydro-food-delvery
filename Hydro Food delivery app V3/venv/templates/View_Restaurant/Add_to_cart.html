@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add to cart screen</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_Add_to_cart.css') }}">
+</head>
+<body>   
+    <div class="app-container">
+        <div class = "header">
+            <a href="{{ url_for('homepage') }}" class="back-btn"> Back</a>
+            <p class="Item-name">{{ menu_item.name }}</p>
+            <img src="{{ url_for('get_menu_image', menu_id=menu_item.id) }}"
+                            alt="{{ menu_item.name }}" class="top-image" > 
+            {% if menu_item.description %}
+                <div class="description">
+                    <p>{{ menu_item.description }}</p>
+                </div>
+            {% endif %} 
+        </div>  
+    </div>
+</body>
+</html>
