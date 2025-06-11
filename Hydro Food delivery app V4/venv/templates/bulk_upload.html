@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Restaurant Images - Hydro Food Delivery</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_bulk_upload.css') }}">
+</head>
+<body>
+    <div class="header">
+        <h1>Upload Restaurant Images</h1>
+        <p>Upload images for all your restaurants at once</p>
+    </div>
+    
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash-message {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    
+    <div class="form-container">
+        <div class="instructions">
+            <h3>📋 Instructions:</h3>
+            <ul>
+                <li>Upload images for each restaurant below</li>
+                <li>Supported formats: PNG, JPG, JPEG, GIF</li>
+                <li>Images will be automatically resized and optimized</li>
+                <li>Leave any field empty if you don't want to change that restaurant's image</li>
+            </ul>
+        </div>
+        
+        <form method="POST" enctype="multipart/form-data">
+            <div class="preview-container">
+                <div class="preview-item">
+                    <h4>🥪 Subway</h4>
+                    <input type="file" name="subway_image" accept="image/*">
+                    <p>Upload Subway restaurant image</p>
+                </div>
+                
+                <div class="preview-item">
+                    <h4>🥤 Tank</h4>
+                    <input type="file" name="tank_image" accept="image/*">
+                    <p>Upload Tank restaurant image</p>
+                </div>
+                
+                <div class="preview-item">
+                    <h4>🍣 One Sushi</h4>
+                    <input type="file" name="one_sushi_image" accept="image/*">
+                    <p>Upload One Sushi restaurant image</p>
+                </div>
+                
+                <div class="preview-item">
+                    <h4>🍜 Noodle Kim</h4>
+                    <input type="file" name="noodle_kim_image" accept="image/*">
+                    <p>Upload Noodle Kim restaurant image</p>
+                </div>
+            </div>
+            
+            <div class="form-buttons">
+                <a href="{{ url_for('homepage') }}" class="btn btn-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary">Upload All Images</button>
+            </div>
+        </form>
+        
+        <div style="text-align: center; margin-top: 30px;">
+            <p><strong>Alternative:</strong> You can also edit each restaurant individually from the homepage</p>
+            <a href="{{ url_for('homepage') }}" class="btn btn-secondary">Back to Homepage</a>
+        </div>
+    </div>
+</body>
+</html>
