@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Menu Item Image - Hydro Food Delivery</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_bulk_upload.css') }}">
+    <style>
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .btn {
+            background: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .menu-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Upload Menu Item Image</h1>
+        <p>Add an image for your menu item</p>
+    </div>
+   
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash-message {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+   
+    <div class="form-container">
+        {% if menu_item %}
+            <a href="{{ url_for('view_restaurant', restaurant_id=menu_item.restaurant_id) }}" class="back-btn">← Back to {{ menu_item.rest_name }}</a>
+           
+            <div class="menu-info">
+                <h3>{{ menu_item.name }}</h3>
+                <p><strong>Restaurant:</strong> {{ menu_item.rest_name }}</p>
+                <p><strong>Price:</strong> ${{ "%.2f"|format(menu_item.price) }}</p>
+                {% if menu_item.description %}
+                    <p><strong>Description:</strong> {{ menu_item.description }}</p>
+                {% endif %}
+            </div>
+           
+            <form method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="menu_image">Choose Image:</label>
+                    <input type="file" id="menu_image" name="menu_image" accept=".png,.jpg,.jpeg,.gif" required>
+                    <small>Accepted formats: PNG, JPG, JPEG, GIF (Max 16MB)</small>
+                </div>
+               
+                <button type="submit" class="btn">Upload Image</button>
+            </form>
+        {% else %}
+            <p>Menu item not found.</p>
+            <a href="{{ url_for('homepage') }}" class="back-btn">← Back to Home</a>
+        {% endif %}
+    </div>
+</body>
+</html>

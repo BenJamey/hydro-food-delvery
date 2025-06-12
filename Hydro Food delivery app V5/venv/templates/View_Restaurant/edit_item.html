@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Item - Hydro Food Delivery</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_Add_or_edit_item.css') }}">
+</head>
+<body>
+    <div class="app-container">
+        <div class="header">
+            <h1>Edit Menu Item</h1>
+            <p>Update the details for this menu item</p>
+            <p>Item ID: {{ menu_item.id }} | Restaurant ID: {{ restaurant_id }}</p>
+        </div>
+       
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+ 
+        <!--Form to edit item details-->
+        <div class="form-container">
+            <form method="POST" enctype="multipart/form-data">
+                <!--Enter the items name-->
+                <div class="form-group">
+                    <label for="item_name">Item Name *</label>
+                    <input type="text" id="item_name" name="item_name" required
+                           value="{{ menu_item.name }}"
+                           placeholder="Enter name of the item">
+                </div>
+               
+                <!--Enter the items description-->
+                <div class="form-group">
+                    <label for="item_description">Description *</label>
+                    <textarea id="item_description" name="item_description" rows="3" required
+                              placeholder="Describe the item being added">{{ menu_item.description }}</textarea>
+                </div>
+ 
+                <!--Enter the items ingredients-->
+                <div class="form-group">
+                    <label for="item_ingredients">Ingredients *</label>
+                    <textarea id="item_ingredients" name="item_ingredients" rows="3" required
+                              placeholder="List the ingredients used for this item">{{ menu_item.ingredients }}</textarea>
+                </div>
+ 
+                <!--Enter the items category-->
+                <div class="form-group">
+                    <label for="item_catagory">Category *</label>
+                    <textarea id="item_catagory" name="item_catagory" rows="3" required
+                              placeholder="Please enter items category">{{ menu_item.category }}</textarea>
+                </div>
+ 
+                <!--Enter the items price-->
+                <div class="form-group">
+                    <label for="item_price">Price ($) *</label>
+                    <input type="number" id="item_price" name="item_price"
+                           min="0" step="0.01" required
+                           value="{{ menu_item.price }}"
+                           placeholder="2.50">
+                </div>
+ 
+                <!--Enter the items cooking time-->
+                <div class="form-group">
+                    <label for="cooking_time">Cooking Time (Minutes) *</label>
+                    <input type="number" id="cooking_time" name="cooking_time"
+                           min="0" step="0.01" required
+                           value="{{ menu_item.cooking_time }}"
+                           placeholder="50">
+                </div>
+ 
+                <!--Enter the items calories-->
+                <div class="form-group">
+                    <label for="calories">Calories *</label>
+                    <input type="number" id="calories" name="calories"
+                           min="0" step="0.01" required
+                           value="{{ menu_item.calories }}"
+                           placeholder="50">
+                </div>
+               
+                <!--Select the items spice level-->
+                <div class="form-group">
+                    <label for="spice_level">Spice Level *</label>
+                    <select id="spice_level" name="spice_level" required>
+                        <option value="">Select spice level</option>
+                        <option value="none" {% if menu_item.spice_level == 'none' %}selected{% endif %}>None</option>
+                        <option value="Light" {% if menu_item.spice_level == 'Light' %}selected{% endif %}>Light</option>
+                        <option value="Mild" {% if menu_item.spice_level == 'Mild' %}selected{% endif %}>Mild</option>
+                        <option value="Medium" {% if menu_item.spice_level == 'Medium' %}selected{% endif %}>Medium</option>
+                        <option value="High" {% if menu_item.spice_level == 'High' %}selected{% endif %}>Hot</option>
+                    </select>
+                </div>
+ 
+                <!--Vegetarian option-->
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="vegetarian" name="vegetarian" value="1"
+                               {% if menu_item.vegetarian %}checked{% endif %}>
+                        <span class="checkmark"></span>
+                        Vegetarian Item
+                    </label>
+                    <small>Check if this item is suitable for vegetarians</small>
+                </div>
+ 
+                <!--Chef special option-->
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="chef_special" name="chef_special" value="1"
+                               {% if menu_item.chef_special %}checked{% endif %}>
+                        <span class="checkmark"></span>
+                        Chef's Special
+                    </label>
+                    <small>Check if this is a chef's special item</small>
+                </div>
+ 
+                <!--Current image display-->
+                {% if menu_item.image_data %}
+                <div class="form-group">
+                    <label>Current Image:</label>
+                    <img src="{{ url_for('get_menu_image', menu_id=menu_item.id) }}"
+                         alt="{{ menu_item.name }}"
+                         style="max-width: 200px; max-height: 200px; object-fit: cover; border-radius: 8px;">
+                </div>
+                {% endif %}
+               
+                <!--Upload an image of the item-->
+                <div class="form-group">
+                    <label for="item_image">{% if menu_item.image_data %}Update Item Image{% else %}Item Image{% endif %}</label>
+                    <input type="file" id="item_image" name="item_image"
+                           accept="image/*">
+                    <small>{% if menu_item.image_data %}Upload a new image to replace the current one{% else %}Upload an image for this menu item{% endif %} (PNG, JPG, JPEG, GIF)</small>
+                </div>
+               
+                <div class="form-buttons">
+                    <a href="{{ url_for('view_restaurant', restaurant_id=restaurant_id) }}" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Update Item</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hydro Food Delivery</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_home.css') }}">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header for the top of the screen -->
+        <div class="header">
+            <h1 style = "font-size: 65px;">Hydro Food Delivery</h1>
+            <p style = "margin-top:-20px;">Welcome to our restaurant platform!</p>
+            
+            <!-- Action Buttons -->
+            <div style="text-align: center; margin-bottom: 20px;">
+                <a href="{{ url_for('add_restaurant') }}" class="add-btn">Add New Restaurant</a>
+                <a href="{{ url_for('upload_bulk_images') }}" class="add-btn" style="margin-left: 10px; background-color: #e67e22;">Upload Images</a>
+            </div>
+        </div>
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    
+        <!-- Restaurants List -->
+        <!-- Displays all the different restauraunts and they're options -->
+        {% if restaurants %}
+            <h3 class="Restauraunt-catagory">All restauruants</h3>
+            <div class="scroll-container">
+                {% for restaurant in restaurants %}
+                <div class="restaurant-card">
+                    {% if restaurant.cover_image %}
+                        <img src="{{ url_for('get_restaurant_image', restaurant_id=restaurant.id) }}" 
+                            alt="{{ restaurant.rest_name }}" class="restaurant-image" >
+                    {% else %}
+                        <div class="no-image">No Image Available</div>
+                    {% endif %}
+                
+                    <div class="restaurant-name">{{ restaurant.rest_name }}</div>
+                    <div class="restaurant-info">
+                        <span class="rating">★ {{ restaurant.rest_score }}/5</span>
+                        <span class="delivery-fee">Delivery: ${{ "%.2f"|format(restaurant.delivery_fee) }}</span>
+                    </div>
+
+                    <div class="restaurant-info">
+                        <span class="category">{{ restaurant.details.replace('_', ' ').title() }}</span>
+                    </div>
+                    
+                    <!-- The 3 different options for the restauraunt -->
+                    <div class="restaurant-actions">
+                        <a href="{{ url_for('view_restaurant', restaurant_id=restaurant.id) }}" class="view-btn"> View</a>
+                        <a href="{{ url_for('edit_restaurant', restaurant_id=restaurant.id) }}" class="edit-btn">Edit</a>
+                        <form method="POST" action="{{ url_for('delete_restaurant', restaurant_id=restaurant.id) }}" 
+                            style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this restaurant?')">
+                            <button type="submit" class="delete-btn">Delete</button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <!--Used for displaying items with an uder $2 delivery fee-->
+            <h3 class="Restauraunt-catagory">Under $2 delivery fee</h3>
+            <div class = "scroll-container">
+                {% for restaurant in restaurants %}
+                {%if restaurant.delivery_fee <= 2 %}
+                    <div class="restaurant-card">
+                        {% if restaurant.cover_image %}
+                            <img src="{{ url_for('get_restaurant_image', restaurant_id=restaurant.id) }}" 
+                                alt="{{ restaurant.rest_name }}" class="restaurant-image" >
+                        {% else %}
+                            <div class="no-image">No Image Available</div>
+                        {% endif %}
+                
+                        <div class="restaurant-name">{{ restaurant.rest_name }}</div>
+                        <div class="restaurant-info">
+                            <span class="rating">★ {{ restaurant.rest_score }}/5</span>
+                            <span class="delivery-fee">Delivery: ${{ "%.2f"|format(restaurant.delivery_fee) }}</span>
+                        </div>
+
+                        <div class="restaurant-info">
+                            <span class="category">{{ restaurant.details.replace('_', ' ').title() }}</span>
+                        </div>
+                    
+                        <!-- The 3 different options for the restauraunt -->
+                        <div class="restaurant-actions">
+                            <a href="{{ url_for('view_restaurant', restaurant_id=restaurant.id) }}" class="view-btn"> View</a>
+                            <a href="{{ url_for('edit_restaurant', restaurant_id=restaurant.id) }}" class="edit-btn">Edit</a>
+                            <form method="POST" action="{{ url_for('delete_restaurant', restaurant_id=restaurant.id) }}" 
+                                style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this restaurant?')">
+                                <button type="submit" class="delete-btn">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="no-restaurants">
+                <h2>No restaurants available yet!</h2>
+                <p>Be the first to add a restaurant to our platform.</p>
+                <a href="{{ url_for('add_restaurant') }}" class="add-btn">Add Restaurant</a>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
