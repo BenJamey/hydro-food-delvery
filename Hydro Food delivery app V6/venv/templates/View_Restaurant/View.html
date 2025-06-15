@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hydro Food Delivery</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_restaurant_page.css') }}">
+</head>
+<body>   
+    <div class="app-container">
+        <div class = "header">
+            <a href="{{ url_for('homepage') }}" class="back-btn">← Back to Home</a>
+            <div style=" height:190px; margin-top: -20px;"> 
+                <h2 class="restaurant-name">{{ restaurant.rest_name }}</h2>
+                <img src="{{ url_for('get_restaurant_image', restaurant_id=restaurant.id) }}" 
+                            alt="{{ restaurant.rest_name }}" class ="top-image">
+            </div>
+            {% if restaurant.description %}
+            <div class="description">
+                <p>{{ restaurant.description }}</p>
+            </div>
+            {% endif %}    
+        </div>
+        <div class="review_stars">
+            <h2>Review: {{ restaurant.rest_score }}/5   ★</h2>
+        </div>
+
+        <!--<p>current ID {{ restaurant.id }}</p>-->
+        <a href="{{ url_for('Add_item', restaurant_id=restaurant.id) }}" class="Add-item-btn"> Add Item</a>
+        <h2 style = "margin-left: 20px;">All items</h2>
+        {% if memu_items%}
+            <div class = "food-grid">
+                {% for items in memu_items %}
+                    {% if items.restaurant_id == restaurant.id %}
+                    <!--Link used to help load screen that displays food item-->
+                        <div class = "item-card">
+                            <!--Displays either the items image or the option to upload an image if there is none-->
+                            {% if items.image_data %}
+                                <img src="{{ url_for('get_menu_image', menu_id=items.id) }}"
+                                    alt="{{ items.name }}" class="item-image" >
+                            {% else %}
+                                <div class = "no-image">
+                                    <a href="{{ url_for('add_item_image', menu_id=items.id) }}" class="add-img-btn">Please upload image</a>
+                                </div>
+                            {% endif %}
+                            <div class = "Item-details">
+                                <p class = "Item-name">{{ items.name }}</p>
+                                <p class = "Item-price">Price: ${{ "%.2f"|format(items.price) }}</p>
+                            <!--{% if items.description %}
+                                <p>{{ items.description }}</p>
+                            {% endif %}-->
+                            <a href="{{ url_for('view_item', item_id=items.id) }}" class = "Cart-btn">Add to cart</a>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+
+                <!--{% if menu_items|length == 0 %}
+                    <p>No menu items found for this restaurant.</p>
+                {% endif %}-->
+            </div>
+        {% else %}
+        <div class="no-items">
+            <h2>No items available yet!</h2>
+            <p>Please add items to the list.</p>
+            <a href="{{ url_for('Add_item', restaurant_id=restaurant.id) }}" class="Add-item-btn"> Add Item</a>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
