@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Menu Item Image - Hydro Food Delivery</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_adding_images.css') }}">
+</head>
+<body>
+    <div class = "app_container">
+        <div class="header">
+            <h1>Upload Menu Item Image</h1>
+            <p>Add an image for your menu item</p>
+        </div>
+   
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+   
+        <div class="form-container">
+            {% if menu_item %}
+                <a href="{{ url_for('view_restaurant', restaurant_id=menu_item.restaurant_id) }}" class="back-btn">← Back to {{ menu_item.rest_name }}</a>
+           
+                <div class="Info">
+                    <h3>{{ menu_item.name }}</h3>
+                    <p><strong>Restaurant:</strong> {{ menu_item.rest_name }}</p>
+                    <p><strong>Price:</strong> ${{ "%.2f"|format(menu_item.price) }}</p>
+                    {% if menu_item.description %}
+                        <p><strong>Description:</strong> {{ menu_item.description }}</p>
+                    {% endif %}
+                </div>
+           
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="menu_image">Choose Image:</label>
+                        <input type="file" id="menu_image" name="menu_image" accept=".png,.jpg,.jpeg,.gif" required>
+                        <small>Accepted formats: PNG, JPG, JPEG, GIF (Max 16MB)</small>
+                    </div>
+               
+                    <button type="submit" class="btn">Upload Image</button>
+                </form>
+            {% else %}
+                <p>Menu item not found.</p>
+                <a href="{{ url_for('homepage') }}" class="back-btn">← Back to Home</a>
+            {% endif %}
+        </div>
+        </div>
+</body>
+</html>

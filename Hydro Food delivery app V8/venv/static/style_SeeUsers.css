@@ -1,0 +1,193 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+       
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    padding: 20px;
+}
+
+.app-container {      
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: #E7F4FB;
+    border: 3px solid black;
+}
+       
+        
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width:100%;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #000000;
+}
+       
+.back-btn {
+    display: inline-block; 
+    margin-bottom: 20px;
+    color: white; 
+    padding: 16px; 
+    border-radius: 15px; 
+    font-size: 14px; 
+    font-weight:bold; 
+    text-decoration: none; 
+    background-color:#4b5279; 
+    margin-left: 20px;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+       
+.back-btn:hover {
+    background-color: #3f468a;
+}
+       
+.page-title {
+    color: #333;
+    font-size: 28px;
+    font-weight: bold;
+    margin-right:20px;
+}
+       
+.users-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom:20px;
+}
+       
+.user-card {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    width:90%;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin: auto;
+}
+       
+.user-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+       
+.user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+       
+.username {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.admin-status {
+    font-size: 14px;
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+       
+.admin-badge {
+    background-color: #28a745;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}
+       
+.user-badge {
+    background-color: #6c757d;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}
+       
+.delete-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+       
+.delete-btn:hover {
+    background-color: #c82333;
+}
+       
+.delete-btn:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+}
+       
+.no-users {
+    text-align: center;
+    padding: 50px;
+    color: #666;
+}
+       
+.user-stats {
+    background-color: #093d8b;
+    border: 3px solid #ffc400;
+    padding: 15px;
+    width: 90%;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin:auto;
+    margin-bottom:20px;
+}
+       
+.stat-item {
+    text-align: center;
+}
+       
+.stat-number {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffc400;
+}    
+
+.stat-label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffc400;
+}
+       
+.flash-message {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+       
+.flash-message.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+       
+.flash-message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}

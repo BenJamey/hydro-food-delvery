@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Users - Admin Panel</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_SeeUsers.css') }}">
+
+</head>
+<body>
+    <div class="app-container">
+        <div class="header">
+            <a href="{{ url_for('homepage') }}" class="back-btn">← Back to Home</a>
+            <h1 class="page-title">User Management</h1>
+        </div>
+       
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+       
+        {% if users_list %}
+            <!-- User Statistics -->
+            <div class="user-stats">
+                <div class="stat-item">
+                    <div class="stat-number">{{ users_list|length }}</div>
+                    <div class="stat-label">Total Users</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">{{ users_list|selectattr('isAdmin')|list|length }}</div>
+                    <div class="stat-label">Admins</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">{{ (users_list|length) - (users_list|selectattr('isAdmin')|list|length) }}</div>
+                    <div class="stat-label">Regular Users</div>
+                </div>
+            </div>
+           
+            <!-- Users Grid -->
+            <div class="users-grid">
+                {% for user in users_list %}
+                    <div class="user-card">
+                        <div class="user-info">
+                            <div class="username">{{ user.username }}</div>
+                            <div class="admin-status">
+                                {% if user.isAdmin %}
+                                    <span class="admin-badge">Admin</span>
+                                {% else %}
+                                    <span class="user-badge">User</span>
+                                {% endif %}
+                            </div>
+                            {% if user.email %}
+                                <div style="color: #666; font-size: 14px;">{{ user.email }}</div>
+                            {% endif %}
+                        </div>
+                       
+                        <form method="POST" action="{{ url_for('delete_user', user_id=user.id) }}"
+                              onsubmit="return confirmDelete('{{ user.username }}')" style="margin: 0;">
+                            {% if user.isAdmin and (users_list|selectattr('isAdmin')|list|length) <= 1 %}
+                                <button type="button" class="delete-btn" disabled title="Cannot delete the last admin">
+                                    Delete
+                                </button>
+                            {% elif user.id == current_user_id %}
+                                <button type="button" class="delete-btn" disabled title="Cannot delete yourself">
+                                    Delete
+                                </button>
+                            {% else %}
+                                <button type="submit" class="delete-btn">Delete</button>
+                            {% endif %}
+                        </form>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="no-users">
+                <h2>No users found</h2>
+                <p>There are currently no users in the system.</p>
+            </div>
+        {% endif %}
+    </div>
+   
+    <script>
+        function confirmDelete(username) {
+            return confirm(`Are you sure you want to delete user "${username}"? This action cannot be undone.`);
+        }
+       
+        // Auto-hide flash messages after 5 seconds
+        document.addEventListener('DOMContentLoaded', function() {
+            const flashMessages = document.querySelectorAll('.flash-message');
+            flashMessages.forEach(function(message) {
+                setTimeout(function() {
+                    message.style.opacity = '0';
+                    setTimeout(function() {
+                        message.remove();
+                    }, 300);
+                }, 5000);
+            });
+        });
+    </script>
+</body>
+</html>
