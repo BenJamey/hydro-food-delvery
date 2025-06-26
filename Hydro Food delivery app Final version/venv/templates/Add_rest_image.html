@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Restaurant Image - Hydro Food Delivery</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_adding_images.css') }}">
+</head>
+<body>
+    <div class = "app_container">
+        <div class="header">
+            <h1>Upload Restaurant Image</h1>
+            <p>Add a image of the logo for the restauraunt</p>
+        </div>
+   
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+   
+        <div class="form-container">
+            {% if restaurant %}
+                <a href="{{ url_for('homepage') }}" class="back-btn">← Back to Home</a>
+                <!--Displays the restauraunts information-->
+                <div class="Info">
+                    <h3>{{ restaurant.rest_name }}</h3>
+                    <p><strong>Rating:</strong> {{ restaurant.rest_score }}/5.0</p>
+                    <p><strong>Delivery Fee:</strong> ${{ "%.2f"|format(restaurant.delivery_fee) }}</p>
+                    {% if restaurant.description %}
+                        <p><strong>Description:</strong> {{ restaurant.description }}</p>
+                    {% endif %}
+                </div>
+           
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="restaurant_image">Choose Restaurant Image:</label>
+                        <input type="file" id="restaurant_image" name="restaurant_image" accept=".png,.jpg,.jpeg,.gif" required>
+                        <small>Accepted formats: PNG, JPG, JPEG, GIF (Max 16MB)</small>
+                    </div>
+               
+                    <button type="submit" class="btn">Upload Image</button>
+                </form>
+            {% else %}
+                <p>Restaurant not found.</p>
+                <a href="{{ url_for('homepage') }}" class="back-btn">← Back to Home</a>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Hydro Food Delivery</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_signUp.css') }}">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-header">
+            <h1>Join Us!</h1>
+            <p>Create your account to start ordering</p>
+        </div>
+ 
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+ 
+        <form method="POST">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required
+                       placeholder="Choose a username" minlength="3">
+            </div>
+ 
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required
+                       placeholder="Enter your email address">
+            </div>
+ 
+            <div class="form-group">
+                <label for="address">Delivery Address:</label>
+                <input type="text" id="address" name="address" required
+                       placeholder="Enter your full delivery address">
+            </div>
+ 
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required
+                       placeholder="Choose a strong password" minlength="6">
+                <div class="password-requirements">
+                    Password should be at least 6 characters long
+                </div>
+            </div>
+ 
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password:</label>
+                <input type="password" id="confirm_password" name="confirm_password" required
+                       placeholder="Confirm your password">
+            </div>
+ 
+            <div class="form-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="admin_confirmation" name="admin_confirmation" value="1">
+                    <span class="checkmark"></span>
+                    Is Admin
+                </label>
+                <small>Confirms if new user is admin (Note: Requires special key confirmation)</small>
+            </div>
+ 
+            <div class="form-group">
+                <!--Admin key: W@T3RF00d#34454-->
+                <input type="password" id="admin_key" name="admin_key" disabled
+                       placeholder="Please enter admin key for admin confirmation">
+            </div>
+           
+ 
+            <button type="submit" class="btn-auth">Create Account</button>
+        </form>
+ 
+        <div class="auth-links">
+            <a href="{{ url_for('login') }}">Already have an account?</a> |
+            <a href="{{ url_for('homepage') }}">Back to Home</a>
+        </div>
+    </div>
+ 
+    <script>
+        // Get references to the checkbox and admin key input
+        const adminCheckbox = document.getElementById('admin_confirmation');
+        const adminKeyInput = document.getElementById('admin_key');
+       
+        // Add event listener to the admin checkbox
+        adminCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                // Enable the admin key input when checkbox is checked
+                adminKeyInput.disabled = false;
+                adminKeyInput.focus();
+            } else {
+                adminKeyInput.disabled = true;
+                adminKeyInput.value = '';
+            }
+        });
+ 
+        // Simple password confirmation validation
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+           
+            if (password !== confirmPassword) {
+                e.preventDefault();
+                alert('Passwords do not match!');
+            }
+        });
+    </script>
+</body>
+</html>
